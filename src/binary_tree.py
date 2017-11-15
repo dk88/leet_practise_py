@@ -57,11 +57,55 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
+        stack = []
         res = []
-        if root:
+        while stack or root:
+            while root:
+                res.append(root.val)
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            root = root.right
+        return res
+
+    def mid_order_traversal_literal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        stack = []
+        res = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
             res.append(root.val)
-            res += self.pre_order_traversal(root.left)
-            res += self.pre_order_traversal(root.right)
+            root = root.right
+        return res
+
+    def post_order_traversal_literal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        stack = []
+        res = []
+        flag_list = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                flag_list.append(0)
+                root = root.left
+            root = stack.pop()
+            flag = flag_list.pop()
+            if flag == 0:
+                stack.append(root)
+                flag_list.append(1)
+                root = root.right
+            else:
+                res.append(root.val)
+                root = None
         return res
 
 
@@ -75,5 +119,8 @@ if __name__ == '__main__':
     root.left.right.left = TreeNode(7)
     so = Solution()
     print so.pre_order_traversal(root)
+    print so.pre_order_traversal_literal(root)
     print so.mid_order_traversal(root)
+    print so.mid_order_traversal_literal(root)
     print so.post_order_traversal(root)
+    print so.post_order_traversal_literal(root)
