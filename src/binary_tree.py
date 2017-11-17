@@ -126,35 +126,60 @@ class Solution(object):
             t3.right = self.mergeTrees(t1.right, t2.right)
             return t3
 
+    def trimBST(self, root, L, R):
+        """
+        :type root: TreeNode
+        :type L: int
+        :type R: int
+        :rtype: TreeNode
+        """
+        if not root:
+            return root
+        if root.val > R:
+            return self.trimBST(root.left, L, R)
+        elif root.val < L:
+            return self.trimBST(root.right, L, R)
+        else:
+            root.left = self.trimBST(root.left, L, R)
+            root.right = self.trimBST(root.right, L, R)
+            return root
+
 
 if __name__ == '__main__':
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    root.left.left = TreeNode(4)
-    root.left.right = TreeNode(6)
-    root.left.left.right = TreeNode(5)
-    root.left.right.left = TreeNode(7)
-    so = Solution()
-    print so.pre_order_traversal(root)
-    print so.pre_order_traversal_literal(root)
-    print so.mid_order_traversal(root)
-    print so.mid_order_traversal_literal(root)
-    print so.post_order_traversal(root)
-    print so.post_order_traversal_literal(root)
+    # root = TreeNode(1)
+    # root.left = TreeNode(2)
+    # root.right = TreeNode(3)
+    # root.left.left = TreeNode(4)
+    # root.left.right = TreeNode(6)
+    # root.left.left.right = TreeNode(5)
+    # root.left.right.left = TreeNode(7)
+    # so = Solution()
+    # print so.pre_order_traversal(root)
+    # print so.pre_order_traversal_literal(root)
+    # print so.mid_order_traversal(root)
+    # print so.mid_order_traversal_literal(root)
+    # print so.post_order_traversal(root)
+    # print so.post_order_traversal_literal(root)
 
     so = Solution()
 
-    root1 = TreeNode(1)
-    root1.left = TreeNode(3)
-    root1.left.left = TreeNode(5)
-    root1.right = TreeNode(2)
-
-    root2 = TreeNode(2)
-    root2.left = TreeNode(1)
-    root2.left.right = TreeNode(4)
-    root2.right = TreeNode(3)
-    root2.right.right = TreeNode(7)
-    print so.mergeTrees(root1, root2)
+    # root1 = TreeNode(1)
+    # root1.left = TreeNode(3)
+    # root1.left.left = TreeNode(5)
+    # root1.right = TreeNode(2)
+    #
+    # root2 = TreeNode(2)
+    # root2.left = TreeNode(1)
+    # root2.left.right = TreeNode(4)
+    # root2.right = TreeNode(3)
+    # root2.right.right = TreeNode(7)
+    # print so.mergeTrees(root1, root2)
+    root = TreeNode(3)
+    root.left = TreeNode(0)
+    root.right = TreeNode(4)
+    root.left.right = TreeNode(2)
+    root.left.right.left = TreeNode(1)
+    new_root = so.trimBST(root, 1, 3)
+    print so.mid_order_traversal(new_root)
 
 
